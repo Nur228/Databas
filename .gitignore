@@ -1,0 +1,11 @@
+.DS_Store
+Thumbs.db
+*.log
+__pycache__/
+.idea/
+.vscode/
+~$*.docx
+lab08-views-roles/DEFENSE.md
+lab08-views-roles/defense_trainer.html
+lab08-views-roles/lab08.sql
+README.md

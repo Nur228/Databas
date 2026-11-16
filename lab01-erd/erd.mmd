@@ -1,0 +1,104 @@
+erDiagram
+    AIRLINE ||--o{ FLIGHTS : "operates"
+    AIRPORT ||--o{ FLIGHTS : "departure from"
+    AIRPORT ||--o{ FLIGHTS : "arrival to"
+    FLIGHTS ||--o{ BOOKING : "has"
+    PASSENGERS ||--o{ BOOKING : "makes"
+    BOOKING ||--o{ BOOKING_FLIGHT : "change history"
+    FLIGHTS ||--o{ BOOKING_FLIGHT : "referenced in"
+    BOOKING ||--o| BOARDING_PASS : "gets"
+    BOOKING ||--o{ BAGGAGE : "registers"
+    BOOKING ||--o{ BAGGAGE_CHECK : "checked in"
+    PASSENGERS ||--o{ BAGGAGE_CHECK : "owns"
+    PASSENGERS ||--o{ SECURITY_CHECK : "passes"
+
+    AIRLINE {
+        int airline_id PK
+        varchar(30) airline_code UK
+        varchar(50) airline_name
+        varchar(50) airline_country
+        timestamp created_at
+        timestamp updated_at
+    }
+    AIRPORT {
+        int airport_id PK
+        varchar(50) airport_name
+        varchar(50) country
+        varchar(50) state
+        varchar(50) city
+        timestamp created_at
+        timestamp updated_at
+    }
+    FLIGHTS {
+        int flight_id PK
+        int airline_id FK
+        int departing_airport_id FK
+        int arriving_airport_id FK
+        varchar(50) departing_gate
+        varchar(50) arriving_gate
+        timestamp sch_departure_time
+        timestamp sch_arrival_time
+        timestamp act_departure_time
+        timestamp act_arrival_time
+        timestamp created_at
+        timestamp updated_at
+    }
+    PASSENGERS {
+        int passenger_id PK
+        varchar(50) first_name
+        varchar(50) last_name
+        varchar(50) gender
+        date date_of_birth
+        varchar(50) country_of_citizenship
+        varchar(50) country_of_residence
+        varchar(20) passport_number UK
+        timestamp created_at
+        timestamp updated_at
+    }
+    BOOKING {
+        int booking_id PK
+        int flight_id FK
+        int passenger_id FK
+        varchar(50) status
+        varchar(50) booking_platform
+        decimal(7_2) ticket_price
+        timestamp created_at
+        timestamp updated_at
+    }
+    BOOKING_FLIGHT {
+        int booking_flight_id PK
+        int booking_id FK
+        int flight_id FK
+        timestamp created_at
+        timestamp updated_at
+    }
+    BOARDING_PASS {
+        int boarding_pass_id PK
+        int booking_id FK
+        varchar(50) seat
+        timestamp boarding_time
+        timestamp created_at
+        timestamp updated_at
+    }
+    BAGGAGE {
+        int baggage_id PK
+        int booking_id FK
+        decimal(4_2) weight_in_kg
+        timestamp created_at
+        timestamp updated_at
+    }
+    BAGGAGE_CHECK {
+        int baggage_check_id PK
+        int booking_id FK
+        int passenger_id FK
+        varchar(50) check_result
+        timestamp created_at
+        timestamp updated_at
+    }
+    SECURITY_CHECK {
+        int security_check_id PK
+        int passenger_id FK
+        varchar(20) check_result
+        timestamp created_at
+        timestamp updated_at
+    }
